@@ -7,3 +7,6 @@ D:\REPOS\LimeEditor\Lime Editor\Lime Editor\obj\Debug\Lime Editor.csproj.Generat
 D:\REPOS\LimeEditor\Lime Editor\Lime Editor\obj\Debug\Lime Editor.exe
 D:\REPOS\LimeEditor\Lime Editor\Lime Editor\obj\Debug\Lime Editor.pdb
 D:\REPOS\LimeEditor\Lime Editor\Lime Editor\obj\Debug\Lime_Editor.Main.resources
+D:\REPOS\LimeEditor\Lime Editor\Lime Editor\bin\Debug\YamlDotNet.pdb
+D:\REPOS\LimeEditor\Lime Editor\Lime Editor\bin\Debug\YamlDotNet.xml
+D:\REPOS\LimeEditor\Lime Editor\Lime Editor\bin\Debug\YamlDotNet.dll

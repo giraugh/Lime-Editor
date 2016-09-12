@@ -1,0 +1,45 @@
+tiles:
+  - name: "Grass"
+    positions:
+      - start: 0, 0
+        end: 1, 0
+
+  - name: "Raised"
+    positions:
+      - start: 2, 0
+        end: 7, 0
+
+  - name: "Trunk"
+    positions:
+      - start: 8, 0
+        end: 9, 0
+      - start: 6, 1
+        end: 7, 1
+
+  - name: "Canopy"
+    positions:
+      - start: 0, 1
+        end: 5, 1
+      - start: 8, 1
+        end: 9, 1
+      - start: 0, 2
+        end: 1, 2
+
+  - name: "Rock"
+    positions:
+      - start: 7, 2
+        end: 9, 2
+
+  #Shadow not included, added automatically by game
+
+  - name: "Path"
+    positions:
+      - start: 0, 3
+        end: 8, 3
+
+  - name: "Shrub"
+    positions:
+      - start: 9, 3
+        end: 9, 3
+      - start: 0, 4
+        end: 0, 4
