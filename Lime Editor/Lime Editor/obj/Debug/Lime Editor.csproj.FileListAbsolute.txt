@@ -1,0 +1,9 @@
+D:\REPOS\LimeEditor\Lime Editor\Lime Editor\bin\Debug\Lime Editor.exe.config
+D:\REPOS\LimeEditor\Lime Editor\Lime Editor\bin\Debug\Lime Editor.exe
+D:\REPOS\LimeEditor\Lime Editor\Lime Editor\bin\Debug\Lime Editor.pdb
+D:\REPOS\LimeEditor\Lime Editor\Lime Editor\obj\Debug\Lime Editor.csprojResolveAssemblyReference.cache
+D:\REPOS\LimeEditor\Lime Editor\Lime Editor\obj\Debug\Lime_Editor.Properties.Resources.resources
+D:\REPOS\LimeEditor\Lime Editor\Lime Editor\obj\Debug\Lime Editor.csproj.GenerateResource.Cache
+D:\REPOS\LimeEditor\Lime Editor\Lime Editor\obj\Debug\Lime Editor.exe
+D:\REPOS\LimeEditor\Lime Editor\Lime Editor\obj\Debug\Lime Editor.pdb
+D:\REPOS\LimeEditor\Lime Editor\Lime Editor\obj\Debug\Lime_Editor.Main.resources
