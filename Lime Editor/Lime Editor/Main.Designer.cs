@@ -32,13 +32,9 @@
             this.Icons = new System.Windows.Forms.ListView();
             this.MenuTopBar = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.saveToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Canvas = new System.Windows.Forms.Panel();
-            this.debug = new System.Windows.Forms.Label();
+            this.loadProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuTopBar.SuspendLayout();
-            this.Canvas.SuspendLayout();
             this.SuspendLayout();
             // 
             // panel1
@@ -76,30 +72,10 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.newToolStripMenuItem,
-            this.loadToolStripMenuItem,
-            this.saveToolStripMenuItem});
+            this.loadProjectToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
-            // 
-            // newToolStripMenuItem
-            // 
-            this.newToolStripMenuItem.Name = "newToolStripMenuItem";
-            this.newToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
-            this.newToolStripMenuItem.Text = "New";
-            // 
-            // loadToolStripMenuItem
-            // 
-            this.loadToolStripMenuItem.Name = "loadToolStripMenuItem";
-            this.loadToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
-            this.loadToolStripMenuItem.Text = "Load";
-            // 
-            // saveToolStripMenuItem
-            // 
-            this.saveToolStripMenuItem.Name = "saveToolStripMenuItem";
-            this.saveToolStripMenuItem.Size = new System.Drawing.Size(100, 22);
-            this.saveToolStripMenuItem.Text = "Save";
             // 
             // Canvas
             // 
@@ -107,20 +83,17 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Canvas.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.Canvas.Controls.Add(this.debug);
             this.Canvas.Location = new System.Drawing.Point(248, 28);
             this.Canvas.Name = "Canvas";
             this.Canvas.Size = new System.Drawing.Size(598, 580);
             this.Canvas.TabIndex = 3;
             // 
-            // debug
+            // loadProjectToolStripMenuItem
             // 
-            this.debug.AutoSize = true;
-            this.debug.Location = new System.Drawing.Point(3, 0);
-            this.debug.Name = "debug";
-            this.debug.Size = new System.Drawing.Size(99, 13);
-            this.debug.TabIndex = 0;
-            this.debug.Text = "DEBUG CONSOLE";
+            this.loadProjectToolStripMenuItem.Name = "loadProjectToolStripMenuItem";
+            this.loadProjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadProjectToolStripMenuItem.Text = "Load Project";
+            this.loadProjectToolStripMenuItem.Click += new System.EventHandler(this.loadProjectToolStripMenuItem_Click);
             // 
             // Main
             // 
@@ -139,8 +112,6 @@
             this.Load += new System.EventHandler(this.Form1_Load);
             this.MenuTopBar.ResumeLayout(false);
             this.MenuTopBar.PerformLayout();
-            this.Canvas.ResumeLayout(false);
-            this.Canvas.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -152,11 +123,8 @@
         private System.Windows.Forms.ListView Icons;
         private System.Windows.Forms.MenuStrip MenuTopBar;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.Panel Canvas;
-        private System.Windows.Forms.Label debug;
+        private System.Windows.Forms.ToolStripMenuItem loadProjectToolStripMenuItem;
     }
 }
 

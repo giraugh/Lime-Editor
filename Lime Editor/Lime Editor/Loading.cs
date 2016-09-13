@@ -13,43 +13,48 @@ using YamlDotNet.Serialization;
 
 namespace Lime_Editor
 {
-    public partial class Main : Form
+    public class Loading
     {
+        public static int tileSize = 18;
 
-        string DefTilesDocument = File.ReadAllText("D:/REPOS/LimeEditor/Tiles.yml");
-        string Deftilesheet = @"D:\REPOS\LimeEditor\tilesheet.png";
-        int tileSize = 18;
-        List<Tile> tiles = new List<Tile>();
-
-        public Main()
+        public static void Load_Project(string proj, ListView Icons)
         {
-            InitializeComponent();
+            //Check Files Exist
+            if (!File.Exists(proj + "/tiles.yml"))
+            {
+                MessageBox.Show(
+                    "Could not find \"tiles.yml\" in the project.",
+                    "Folder is not a project",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (!File.Exists(proj + "/tilesheet.png"))
+            {
+                MessageBox.Show(
+                    "Could not find \"tilesheet.png\" in the project.",
+                    "Folder is not a project",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+
+
+            //Load Project Elements
+            Init_Icons(Icons);
+            Load_Tiles(proj + "/tiles.yml", proj + "/tilesheet.png", Icons);
         }
 
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            debug.Text = "";
-            Init_Icons();
-            Load_Tiles(DefTilesDocument, Deftilesheet);
-        }
-
-        private void Log(string x)
-        {
-            debug.Text += x+"\n";
-        }
-
-        private void Init_Icons()
+        public static void Init_Icons(ListView Icons)
         {
             Icons.Columns.Add("Icons", 100);
         }
 
-        private void Load_Images(string tilesheet)
+        public static void Load_Images(string tilesheet, ListView Icons, List<Tile> tiles)
         {
             ImageList imgs = new ImageList();
             int iterator = 0;
             foreach (Tile tile in tiles)
             {
-                Icon ic = getIcon(tile.pos, tilesheet);
+                Icon ic = Loading.getIcon(tile.pos, tilesheet);
                 imgs.Images.Add(ic);
                 Icons.Items[iterator].ImageIndex = iterator;
                 iterator++;
@@ -58,19 +63,21 @@ namespace Lime_Editor
             Icons.LargeImageList = imgs;
         }
 
-        public Icon getIcon(Vector2 pos, string tilesheet)
+        public static Icon getIcon(Vector2 pos, string tilesheet)
         {
             Bitmap bmp = new Bitmap(Image.FromFile(tilesheet, false));
-            bmp = CropImage(bmp, new Rectangle(pos.x*tileSize, pos.y*tileSize, tileSize, tileSize));
+            bmp = CropImage(bmp, new Rectangle(pos.x * tileSize, pos.y * tileSize, tileSize, tileSize));
             IntPtr hbmp = bmp.GetHicon();
             Icon ic = Icon.FromHandle(hbmp);
             return ic;
         }
 
-        private void Load_Tiles(string TilesDocument, string tileSheet)
+        private static void Load_Tiles(string TilesDocument, string tileSheet, ListView Icons)
         {
-            var r = new StringReader(TilesDocument);
+            var input = File.ReadAllText(TilesDocument);
+            var r = new StringReader(input);
             var deserializer = new Deserializer();
+            List<Tile> tiles = new List<Tile>();
             Tiles tiletypes = deserializer.Deserialize<Tiles>(r);
 
             //Create Tiles from Tiletype definitions
@@ -115,9 +122,9 @@ namespace Lime_Editor
             }
 
             //Load Images, and associate with ListView
-            Load_Images(tileSheet);
+            Load_Images(tileSheet, Icons, tiles);
 
-        }   
+        }
 
         public class Tiles
         {
@@ -143,11 +150,11 @@ namespace Lime_Editor
             public string end { get; set; }
             public iPosition GetProper()
             {
-                Vector2 istart = new Vector2(0,0);
-                Vector2 iend = new Vector2(0,0);
+                Vector2 istart = new Vector2(0, 0);
+                Vector2 iend = new Vector2(0, 0);
                 Match m;
                 Regex vectorReg = new Regex(@"([0-9]+),\s*([0-9]+)");
-                
+
                 m = vectorReg.Match(this.start);
                 istart.x = Int32.Parse(m.Groups[1].ToString());
                 istart.y = Int32.Parse(m.Groups[2].ToString());
@@ -163,7 +170,7 @@ namespace Lime_Editor
             }
         }
 
-        public class iPosition 
+        public class iPosition
         {
             public Vector2 start { get; set; }
             public Vector2 end { get; set; }
@@ -171,7 +178,7 @@ namespace Lime_Editor
 
         public class Vector2
         {
-            public Vector2 (int x, int y)
+            public Vector2(int x, int y)
             {
                 this.x = x;
                 this.y = y;
@@ -184,7 +191,7 @@ namespace Lime_Editor
             }
         }
 
-        public Bitmap CropImage(Bitmap source, Rectangle section)
+        public static Bitmap CropImage(Bitmap source, Rectangle section)
         {
             // An empty bitmap which will hold the cropped image
             Bitmap bmp = new Bitmap(section.Width, section.Height);
