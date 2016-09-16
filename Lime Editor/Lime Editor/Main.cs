@@ -99,7 +99,10 @@ namespace Lime_Editor
                 {
                     if (tile.position.x == m.X && tile.position.y == m.Y)
                     {
-                        tile.tileId = Icons.SelectedIndices[0];
+                        if (e.Button == MouseButtons.Left)
+                            tile.tileId = Icons.SelectedIndices[0];
+                        if (e.Button == MouseButtons.Right)
+                            tile.tileId = -1;
                     }
                 }
             }
@@ -109,23 +112,19 @@ namespace Lime_Editor
         private Point getUnscaledMousePos()
         {
             Point mp = Canvas.PointToClient(Cursor.Position);
-            float mpx = mp.X;
-            float mpy = mp.Y;
+            float mpx = mp.X + ProjOps.tileSize / 4;
+            float mpy = mp.Y + ProjOps.tileSize / 4;
             float sc = (grid.zoomFactor * ProjOps.tileSize);
-            mpx = (float)Math.Round(mpx / sc);
-            mpy = (float)Math.Round(mpy / sc);
+            mpx = (float)Math.Floor(mpx / sc);
+            mpy = (float)Math.Floor(mpy / sc);
             return new Point((int)mpx, (int)mpy);
         }
 
         private Point getMousePos()
         {
-            Point mp = Canvas.PointToClient(Cursor.Position);
-            float mpx = mp.X;
-            float mpy = mp.Y;
+            Point m = getUnscaledMousePos();
             float sc = (grid.zoomFactor * ProjOps.tileSize);
-            mpx = (float)Math.Round(mpx / sc) * sc;
-            mpy = (float)Math.Round(mpy / sc) * sc;
-            return new Point((int)mpx, (int)mpy);
+            return new Point((int)(m.X * sc), (int)(m.Y * sc));
         }
 
         private void UpdateOnMouseMove(object sender, MouseEventArgs e)
