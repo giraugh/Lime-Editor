@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using YamlDotNet.Serialization;
 using System.Reflection;
+using System.Diagnostics;
 
 namespace Lime_Editor
 {
@@ -18,7 +19,8 @@ namespace Lime_Editor
     {
         string Project = "D:/REPOS/LimeEditor/default";
         Loading.ProjectOptions ProjOps;
-        Editor.TileGrid grid;
+        Editor.Layers layers;
+        int selectedLayer = 0;
 
         public Main() {
             InitializeComponent();
@@ -39,10 +41,20 @@ namespace Lime_Editor
             ProjOps = Loading.Load_Project(proj, Icons);
             if (ProjOps != null)
             {
-                grid = new Editor.TileGrid(ProjOps.gridSize, proj, ProjOps);
+                layers = new Editor.Layers((uint)ProjOps.layerCount, ProjOps.gridSize, ProjOps);
             }
             else
             { MessageBox.Show("Project failed to load, no ops returned."); }
+
+            //set layer selection combo box
+            for (int i = 0; i < ProjOps.layerCount; i++) {
+                if (i < ProjOps.layerNames.Count<string>())
+                    comLayerSelect.Items.Add(ProjOps.layerNames[i]);
+                else
+                    comLayerSelect.Items.Add("Layer "+(i+1).ToString());
+            }
+
+            comLayerSelect.SelectedIndex = 0;
         }
 
         private void loadProjectToolStripMenuItem_Click(object sender, EventArgs e)
@@ -63,21 +75,21 @@ namespace Lime_Editor
             g.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
             g.SmoothingMode = System.Drawing.Drawing2D.SmoothingMode.None;
             g.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.None;
-            if (ProjOps != null && grid != null)
+            if (ProjOps != null && layers != null)
             {
-                foreach (Editor.Tile tile in grid.tiles)
+                foreach (Editor.TileGrid grid in layers.layers)
                 {
-                    float ts = ProjOps.tileSize;
-                    int x = (tile.position.x*(int)ts)*(int)grid.zoomFactor;
-                    int y = (tile.position.y*(int)ts)*(int)grid.zoomFactor;
-                    bool Hover = (tile.position.x == getUnscaledMousePos().X && tile.position.y == getUnscaledMousePos().Y);
-                    if (tile.image != null && !Hover)
+                    foreach (Editor.Tile tile in grid.tiles)
                     {
-                        g.DrawImage(tile.image, x, y, (float)Math.Round(ts*grid.zoomFactor), (float)Math.Round(ts*grid.zoomFactor));
-                    }
-                    else
-                    {
-                        g.DrawRectangle(new Pen(Color.DarkGray), new Rectangle(x, y, (int)(ts*grid.zoomFactor), (int)(ts * grid.zoomFactor)));
+                        float ts = ProjOps.tileSize;
+                        int sc = (int)((ts-1) * ProjOps.zoomFactor);
+                        int x = (int)Math.Floor((double)(tile.position.x * sc));
+                        int y = (int)Math.Floor((double)(tile.position.y * sc));
+                        bool Hover = (tile.position.x == getUnscaledMousePos().X && tile.position.y == getUnscaledMousePos().Y);
+                        if (tile.image != null)
+                        {
+                            g.DrawImage(tile.image, x, y, (float)Math.Round(ts * ProjOps.zoomFactor), (float)Math.Round(ts * ProjOps.zoomFactor));
+                        }
                     }
                 }
             }
@@ -86,25 +98,25 @@ namespace Lime_Editor
             if (Icons.SelectedIndices.Count > 0)
             {
                 var Selected = Icons.SelectedIndices[0];
-                float sc = (float)Math.Round(ProjOps.tileSize * grid.zoomFactor);
+                float sc = (float)Math.Round(ProjOps.tileSize * ProjOps.zoomFactor);
                 g.DrawImage(ProjOps.images.Images[Selected], getMousePos().X, getMousePos().Y, sc, sc);
             }
         }
 
-        private void UpdateGridForMouse(object sender, MouseEventArgs e)
+        private void UpdateGridForMouse(MouseEventArgs e)
         {
             if (Icons.SelectedIndices.Count > 0) {
                 Point m = getUnscaledMousePos();
-                foreach (Editor.Tile tile in grid.tiles)
-                {
-                    if (tile.position.x == m.X && tile.position.y == m.Y)
+                    foreach (Editor.Tile tile in layers.layers[selectedLayer].tiles)
                     {
-                        if (e.Button == MouseButtons.Left)
-                            tile.tileId = Icons.SelectedIndices[0];
-                        if (e.Button == MouseButtons.Right)
-                            tile.tileId = -1;
+                        if (tile.position.x == m.X && tile.position.y == m.Y)
+                        {
+                            if (e.Button == MouseButtons.Left)
+                                tile.tileId = Icons.SelectedIndices[0];
+                            if (e.Button == MouseButtons.Right)
+                                tile.tileId = -1;
+                        }
                     }
-                }
             }
         }
 
@@ -112,24 +124,30 @@ namespace Lime_Editor
         private Point getUnscaledMousePos()
         {
             Point mp = Canvas.PointToClient(Cursor.Position);
-            float mpx = mp.X + ProjOps.tileSize / 4;
-            float mpy = mp.Y + ProjOps.tileSize / 4;
-            float sc = (grid.zoomFactor * ProjOps.tileSize);
-            mpx = (float)Math.Floor(mpx / sc);
-            mpy = (float)Math.Floor(mpy / sc);
+            float mpx = mp.X;
+            float mpy = mp.Y;
+            float sc = (ProjOps.zoomFactor * (ProjOps.tileSize-1));
+            mpx = (float)mpx / sc;
+            mpy = (float)mpy / sc;
             return new Point((int)mpx, (int)mpy);
         }
 
         private Point getMousePos()
         {
             Point m = getUnscaledMousePos();
-            float sc = (grid.zoomFactor * ProjOps.tileSize);
+            float sc = (ProjOps.zoomFactor * (ProjOps.tileSize-1));
             return new Point((int)(m.X * sc), (int)(m.Y * sc));
         }
 
         private void UpdateOnMouseMove(object sender, MouseEventArgs e)
         {
             Canvas.Invalidate();
+            UpdateGridForMouse(e);
+        }
+
+        private void comLayerSelect_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            selectedLayer = comLayerSelect.SelectedIndex;
         }
     }
 }

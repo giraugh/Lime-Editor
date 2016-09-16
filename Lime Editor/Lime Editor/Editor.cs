@@ -9,16 +9,26 @@ namespace Lime_Editor
 {
     static class Editor
     {
+
+        public class Layers
+        {
+            public TileGrid[] layers;
+            public Layers(uint layerNum, Loading.gridSize gridSize, Loading.ProjectOptions projOps)
+            {
+                layers = new TileGrid[layerNum];
+                for (uint i = 0; i < layerNum; i++)
+                {
+                    layers[i] = new TileGrid(gridSize, projOps);
+                }
+            }
+        }
+
         public class TileGrid
         {
-            public TileGrid(Loading.gridSize size, string Project, Loading.ProjectOptions projOps)
+            public TileGrid(Loading.gridSize size, Loading.ProjectOptions projOps)
             {
                 this.size = size;
                 this.tiles = new Tile[this.size.width, this.size.height];
-                if (projOps.zoomFactor != 0)
-                    this.zoomFactor = projOps.zoomFactor;
-                else
-                    this.zoomFactor = 1;
 
                 //Initialize grid, with default tiles
                 for (uint i = 0;i<this.size.width;i++)
@@ -32,7 +42,6 @@ namespace Lime_Editor
 
             public Loading.gridSize size;
             public Tile[,] tiles;
-            public float zoomFactor;
         }
         public class Tile
         {

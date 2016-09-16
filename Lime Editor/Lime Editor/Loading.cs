@@ -174,6 +174,8 @@ namespace Lime_Editor
             public string tiles { get; set; }
             public string spritesheet { get; set; }
             public float zoomFactor { get; set; }
+            public int layerCount { get; set; }
+            public string[] layerNames { get ; set;}
             public ImageList images;
         }
 

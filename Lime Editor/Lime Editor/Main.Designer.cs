@@ -34,6 +34,7 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Canvas = new System.Windows.Forms.Panel();
+            this.comLayerSelect = new System.Windows.Forms.ComboBox();
             this.MenuTopBar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -92,13 +93,23 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Canvas.BackColor = System.Drawing.SystemColors.ControlDarkDark;
-            this.Canvas.Location = new System.Drawing.Point(248, 28);
+            this.Canvas.Location = new System.Drawing.Point(248, 57);
             this.Canvas.Name = "Canvas";
-            this.Canvas.Size = new System.Drawing.Size(598, 697);
+            this.Canvas.Size = new System.Drawing.Size(598, 668);
             this.Canvas.TabIndex = 3;
             this.Canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.Canvas_Paint);
-            this.Canvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.UpdateGridForMouse);
+            this.Canvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.UpdateOnMouseMove);
             this.Canvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UpdateOnMouseMove);
+            // 
+            // comLayerSelect
+            // 
+            this.comLayerSelect.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comLayerSelect.FormattingEnabled = true;
+            this.comLayerSelect.Location = new System.Drawing.Point(248, 30);
+            this.comLayerSelect.Name = "comLayerSelect";
+            this.comLayerSelect.Size = new System.Drawing.Size(121, 21);
+            this.comLayerSelect.TabIndex = 4;
+            this.comLayerSelect.SelectedIndexChanged += new System.EventHandler(this.comLayerSelect_SelectedIndexChanged);
             // 
             // Main
             // 
@@ -106,6 +117,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ClientSize = new System.Drawing.Size(858, 737);
+            this.Controls.Add(this.comLayerSelect);
             this.Controls.Add(this.Canvas);
             this.Controls.Add(this.Icons);
             this.Controls.Add(this.panel1);
@@ -131,6 +143,7 @@
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.Panel Canvas;
         private System.Windows.Forms.ToolStripMenuItem loadProjectToolStripMenuItem;
+        private System.Windows.Forms.ComboBox comLayerSelect;
     }
 }
 
