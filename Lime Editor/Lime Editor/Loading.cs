@@ -15,55 +15,88 @@ namespace Lime_Editor
 {
     public class Loading
     {
-        public static int tileSize = 18;
-
-        public static void Load_Project(string proj, ListView Icons)
+        public static ProjectOptions Load_Project(string proj, ListView Icons)
         {
-            //Check Files Exist
-            if (!File.Exists(proj + "/tiles.yml"))
+            //Check Is Project
+            if (!File.Exists(proj + "/project.yml"))
             {
                 MessageBox.Show(
-                    "Could not find \"tiles.yml\" in the project.",
+                    "Could not find \"project.yml\" in the project.",
                     "Folder is not a project",
                     MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
+                return null;
             }
-            if (!File.Exists(proj + "/tilesheet.png"))
-            {
-                MessageBox.Show(
-                    "Could not find \"tilesheet.png\" in the project.",
-                    "Folder is not a project",
-                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return;
-            }
-
 
             //Load Project Elements
             Init_Icons(Icons);
-            Load_Tiles(proj + "/tiles.yml", proj + "/tilesheet.png", Icons);
+            ProjectOptions po = Load_ProjectOptions(proj + "/project.yml");
+
+            //Check Files Exist
+            if (!File.Exists(proj + "/" + po.tiles))
+            {
+                MessageBox.Show(
+                    "Could not find \""+po.tiles+"\" in the project.",
+                    "Tiles not found",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
+            if (!File.Exists(proj + "/" + po.spritesheet))
+            {
+                MessageBox.Show(
+                    "Could not find \"" + po.spritesheet + "\" in the project.",
+                    "Sprites not found",
+                    MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return null;
+            }
+
+            po.images = Load_Tiles(proj + "/"+po.tiles, proj + "/"+po.spritesheet, Icons, po.tileSize);
+            return po;
         }
 
         public static void Init_Icons(ListView Icons)
         {
-            Icons.Columns.Add("Icons", 100);
+            //Icons.Columns.Add("Icons", 100);
+            Icons.Items.Clear();
         }
 
-        public static void Load_Images(string tilesheet, ListView Icons, List<Tile> tiles)
+        public static ProjectOptions Load_ProjectOptions(string file)
         {
+            var input = File.ReadAllText(file);
+            var r = new StringReader(input);
+            var deserializer = new Deserializer();
+            ProjectOptions opts = deserializer.Deserialize<ProjectOptions>(r);
+            return opts;
+        }
+
+        public static ImageList Load_Images(string tilesheet, ListView Icons, List<Tile> tiles, int tileSize)
+        {
+            ImageList icons = new ImageList();
             ImageList imgs = new ImageList();
+            imgs.ColorDepth = ColorDepth.Depth32Bit;
+            imgs.ImageSize = new Size(tileSize, tileSize);
+
+            //Get Icons
             int iterator = 0;
             foreach (Tile tile in tiles)
             {
-                Icon ic = Loading.getIcon(tile.pos, tilesheet);
-                imgs.Images.Add(ic);
+                Icon ic = Loading.getIcon(tile.pos, tilesheet, tileSize);
+                icons.Images.Add(ic);
                 Icons.Items[iterator].ImageIndex = iterator;
                 iterator++;
             }
 
-            Icons.LargeImageList = imgs;
+            //Get Images
+            foreach (Tile tile in tiles)
+            {
+                Image im = Loading.getImage(tile.pos, tilesheet, tileSize);
+                imgs.Images.Add(im);
+            }
+
+            Icons.LargeImageList = icons;
+            return imgs;
         }
 
-        public static Icon getIcon(Vector2 pos, string tilesheet)
+        public static Icon getIcon(Vector2 pos, string tilesheet, int tileSize)
         {
             Bitmap bmp = new Bitmap(Image.FromFile(tilesheet, false));
             bmp = CropImage(bmp, new Rectangle(pos.x * tileSize, pos.y * tileSize, tileSize, tileSize));
@@ -72,7 +105,14 @@ namespace Lime_Editor
             return ic;
         }
 
-        private static void Load_Tiles(string TilesDocument, string tileSheet, ListView Icons)
+        public static Bitmap getImage(Vector2 pos, string tilesheet, int tileSize)
+        {
+            Bitmap bmp = (Bitmap)Image.FromFile(tilesheet, false);
+            bmp = CropImage(bmp, new Rectangle(pos.x * tileSize, pos.y * tileSize, tileSize, tileSize));
+            return bmp;
+        }
+
+        private static ImageList Load_Tiles(string TilesDocument, string tileSheet, ListView Icons, int tileSize)
         {
             var input = File.ReadAllText(TilesDocument);
             var r = new StringReader(input);
@@ -122,8 +162,19 @@ namespace Lime_Editor
             }
 
             //Load Images, and associate with ListView
-            Load_Images(tileSheet, Icons, tiles);
+            return Load_Images(tileSheet, Icons, tiles, tileSize);
 
+        }
+
+        public class ProjectOptions
+        {
+            public string name { get; set; }
+            public gridSize gridSize { get; set; }
+            public int tileSize { get; set; }
+            public string tiles { get; set; }
+            public string spritesheet { get; set; }
+            public float zoomFactor { get; set; }
+            public ImageList images;
         }
 
         public class Tiles
@@ -183,12 +234,23 @@ namespace Lime_Editor
                 this.x = x;
                 this.y = y;
             }
+            public Vector2(gridSize o)
+            {
+                this.x = o.width;
+                this.y = o.height;
+            }
             public int x { get; set; }
             public int y { get; set; }
             public override string ToString()
             {
                 return this.x.ToString() + ", " + this.y.ToString();
             }
+        }
+
+        public class gridSize
+        {
+            public int width { get; set; }
+            public int height { get; set; }
         }
 
         public static Bitmap CropImage(Bitmap source, Rectangle section)

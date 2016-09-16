@@ -32,8 +32,8 @@
             this.Icons = new System.Windows.Forms.ListView();
             this.MenuTopBar = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Canvas = new System.Windows.Forms.Panel();
             this.loadProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Canvas = new System.Windows.Forms.Panel();
             this.MenuTopBar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -54,9 +54,10 @@
             this.Icons.Location = new System.Drawing.Point(12, 27);
             this.Icons.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.Icons.Name = "Icons";
-            this.Icons.Size = new System.Drawing.Size(229, 581);
+            this.Icons.Size = new System.Drawing.Size(229, 698);
             this.Icons.TabIndex = 1;
             this.Icons.UseCompatibleStateImageBehavior = false;
+            this.Icons.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UpdateOnMouseMove);
             // 
             // MenuTopBar
             // 
@@ -68,6 +69,7 @@
             this.MenuTopBar.Size = new System.Drawing.Size(858, 24);
             this.MenuTopBar.TabIndex = 2;
             this.MenuTopBar.Text = "menuStrip1";
+            this.MenuTopBar.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UpdateOnMouseMove);
             // 
             // fileToolStripMenuItem
             // 
@@ -77,6 +79,13 @@
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
             // 
+            // loadProjectToolStripMenuItem
+            // 
+            this.loadProjectToolStripMenuItem.Name = "loadProjectToolStripMenuItem";
+            this.loadProjectToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.loadProjectToolStripMenuItem.Text = "Load Project";
+            this.loadProjectToolStripMenuItem.Click += new System.EventHandler(this.loadProjectToolStripMenuItem_Click);
+            // 
             // Canvas
             // 
             this.Canvas.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -85,22 +94,17 @@
             this.Canvas.BackColor = System.Drawing.SystemColors.ControlDarkDark;
             this.Canvas.Location = new System.Drawing.Point(248, 28);
             this.Canvas.Name = "Canvas";
-            this.Canvas.Size = new System.Drawing.Size(598, 580);
+            this.Canvas.Size = new System.Drawing.Size(598, 697);
             this.Canvas.TabIndex = 3;
-            // 
-            // loadProjectToolStripMenuItem
-            // 
-            this.loadProjectToolStripMenuItem.Name = "loadProjectToolStripMenuItem";
-            this.loadProjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.loadProjectToolStripMenuItem.Text = "Load Project";
-            this.loadProjectToolStripMenuItem.Click += new System.EventHandler(this.loadProjectToolStripMenuItem_Click);
+            this.Canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.Canvas_Paint);
+            this.Canvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UpdateOnMouseMove);
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
-            this.ClientSize = new System.Drawing.Size(858, 620);
+            this.ClientSize = new System.Drawing.Size(858, 737);
             this.Controls.Add(this.Canvas);
             this.Controls.Add(this.Icons);
             this.Controls.Add(this.panel1);
@@ -110,6 +114,7 @@
             this.ShowIcon = false;
             this.Text = "Lime Editor";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UpdateOnMouseMove);
             this.MenuTopBar.ResumeLayout(false);
             this.MenuTopBar.PerformLayout();
             this.ResumeLayout(false);

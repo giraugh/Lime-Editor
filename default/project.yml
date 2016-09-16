@@ -1,0 +1,8 @@
+name: "Lime"
+gridSize:
+  width: 15
+  height: 15
+tileSize: 18
+tiles: "tiles.yml"
+spritesheet: "tilesheet.png"
+zoomFactor: 2
