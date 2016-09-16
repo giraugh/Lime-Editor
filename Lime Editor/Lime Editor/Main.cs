@@ -34,6 +34,9 @@ namespace Lime_Editor
             typeof(Panel).InvokeMember("DoubleBuffered",
             BindingFlags.SetProperty | BindingFlags.Instance | BindingFlags.NonPublic,
             null, Canvas, new object[] { true });
+
+            //Prevent Icons from losing selection when focus is lost
+            Icons.HideSelection = false;
         }
 
         public void Load_Project(string proj)
@@ -54,18 +57,8 @@ namespace Lime_Editor
                     comLayerSelect.Items.Add("Layer "+(i+1).ToString());
             }
 
+            //set selected layer to first
             comLayerSelect.SelectedIndex = 0;
-        }
-
-        private void loadProjectToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            DialogResult result = fbd.ShowDialog();
-            if (!string.IsNullOrWhiteSpace(fbd.SelectedPath))
-            {
-                Project = fbd.SelectedPath;
-                Load_Project(Project);
-            }
         }
 
         private void Canvas_Paint(object sender, PaintEventArgs e)
@@ -148,6 +141,27 @@ namespace Lime_Editor
         private void comLayerSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
             selectedLayer = comLayerSelect.SelectedIndex;
+        }
+
+        private void saveLevelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Levels.SaveLevel(layers, ProjOps);
+        }
+
+        private void loadProjectToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            DialogResult result = fbd.ShowDialog();
+            if (!string.IsNullOrWhiteSpace(fbd.SelectedPath))
+            {
+                Project = fbd.SelectedPath;
+                Load_Project(Project);
+            }
+        }
+
+        private void loadLevelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            layers = Levels.LoadLevel(layers, ProjOps);
         }
     }
 }

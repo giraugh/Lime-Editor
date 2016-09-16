@@ -33,8 +33,10 @@
             this.MenuTopBar = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.saveLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Canvas = new System.Windows.Forms.Panel();
             this.comLayerSelect = new System.Windows.Forms.ComboBox();
+            this.loadLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuTopBar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -52,6 +54,7 @@
             this.Icons.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left)));
             this.Icons.BackColor = System.Drawing.SystemColors.GrayText;
+            this.Icons.ForeColor = System.Drawing.SystemColors.WindowText;
             this.Icons.Location = new System.Drawing.Point(12, 27);
             this.Icons.Margin = new System.Windows.Forms.Padding(3, 10, 3, 3);
             this.Icons.Name = "Icons";
@@ -75,7 +78,9 @@
             // fileToolStripMenuItem
             // 
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.loadProjectToolStripMenuItem});
+            this.loadProjectToolStripMenuItem,
+            this.saveLevelToolStripMenuItem,
+            this.loadLevelToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -86,6 +91,13 @@
             this.loadProjectToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
             this.loadProjectToolStripMenuItem.Text = "Load Project";
             this.loadProjectToolStripMenuItem.Click += new System.EventHandler(this.loadProjectToolStripMenuItem_Click);
+            // 
+            // saveLevelToolStripMenuItem
+            // 
+            this.saveLevelToolStripMenuItem.Name = "saveLevelToolStripMenuItem";
+            this.saveLevelToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.saveLevelToolStripMenuItem.Text = "Save level";
+            this.saveLevelToolStripMenuItem.Click += new System.EventHandler(this.saveLevelToolStripMenuItem_Click);
             // 
             // Canvas
             // 
@@ -110,6 +122,13 @@
             this.comLayerSelect.Size = new System.Drawing.Size(121, 21);
             this.comLayerSelect.TabIndex = 4;
             this.comLayerSelect.SelectedIndexChanged += new System.EventHandler(this.comLayerSelect_SelectedIndexChanged);
+            // 
+            // loadLevelToolStripMenuItem
+            // 
+            this.loadLevelToolStripMenuItem.Name = "loadLevelToolStripMenuItem";
+            this.loadLevelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.loadLevelToolStripMenuItem.Text = "Load Level";
+            this.loadLevelToolStripMenuItem.Click += new System.EventHandler(this.loadLevelToolStripMenuItem_Click);
             // 
             // Main
             // 
@@ -144,6 +163,8 @@
         private System.Windows.Forms.Panel Canvas;
         private System.Windows.Forms.ToolStripMenuItem loadProjectToolStripMenuItem;
         private System.Windows.Forms.ComboBox comLayerSelect;
+        private System.Windows.Forms.ToolStripMenuItem saveLevelToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadLevelToolStripMenuItem;
     }
 }
 

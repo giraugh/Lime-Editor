@@ -52,9 +52,23 @@ namespace Lime_Editor
                 this.tileId = -1;
                 this.projOps = projOps;
             }
-            public Tile(Loading.Vector2 position)
+            public Tile(int x, int y, Loading.ProjectOptions projOps, int id)
+            {
+                this.position = new Loading.Vector2(x, y);
+                this.tileId = id;
+                this.projOps = projOps;
+            }
+            public Tile(Loading.Vector2 position, Loading.ProjectOptions projOps)
             {
                 this.position = position;
+                this.projOps = projOps;
+                this.tileId = -1;
+            }
+            public Tile(Loading.Vector2 position, Loading.ProjectOptions projOps, int id)
+            {
+                this.position = position;
+                this.projOps = projOps;
+                this.tileId = id;
             }
             public Image image
             {
