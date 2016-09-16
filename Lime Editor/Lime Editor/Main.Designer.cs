@@ -34,9 +34,13 @@
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.Canvas = new System.Windows.Forms.Panel();
             this.comLayerSelect = new System.Windows.Forms.ComboBox();
-            this.loadLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.chkGrid = new System.Windows.Forms.CheckBox();
+            this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.clearLayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuTopBar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -67,7 +71,8 @@
             // 
             this.MenuTopBar.BackColor = System.Drawing.SystemColors.ControlDark;
             this.MenuTopBar.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.editToolStripMenuItem});
             this.MenuTopBar.Location = new System.Drawing.Point(0, 0);
             this.MenuTopBar.Name = "MenuTopBar";
             this.MenuTopBar.Size = new System.Drawing.Size(858, 24);
@@ -99,6 +104,13 @@
             this.saveLevelToolStripMenuItem.Text = "Save level";
             this.saveLevelToolStripMenuItem.Click += new System.EventHandler(this.saveLevelToolStripMenuItem_Click);
             // 
+            // loadLevelToolStripMenuItem
+            // 
+            this.loadLevelToolStripMenuItem.Name = "loadLevelToolStripMenuItem";
+            this.loadLevelToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.loadLevelToolStripMenuItem.Text = "Load Level";
+            this.loadLevelToolStripMenuItem.Click += new System.EventHandler(this.loadLevelToolStripMenuItem_Click);
+            // 
             // Canvas
             // 
             this.Canvas.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -123,12 +135,41 @@
             this.comLayerSelect.TabIndex = 4;
             this.comLayerSelect.SelectedIndexChanged += new System.EventHandler(this.comLayerSelect_SelectedIndexChanged);
             // 
-            // loadLevelToolStripMenuItem
+            // chkGrid
             // 
-            this.loadLevelToolStripMenuItem.Name = "loadLevelToolStripMenuItem";
-            this.loadLevelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.loadLevelToolStripMenuItem.Text = "Load Level";
-            this.loadLevelToolStripMenuItem.Click += new System.EventHandler(this.loadLevelToolStripMenuItem_Click);
+            this.chkGrid.AutoSize = true;
+            this.chkGrid.Checked = true;
+            this.chkGrid.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.chkGrid.Location = new System.Drawing.Point(375, 32);
+            this.chkGrid.Name = "chkGrid";
+            this.chkGrid.Size = new System.Drawing.Size(75, 17);
+            this.chkGrid.TabIndex = 5;
+            this.chkGrid.Text = "Show Grid";
+            this.chkGrid.UseVisualStyleBackColor = true;
+            this.chkGrid.CheckedChanged += new System.EventHandler(this.UpdateNonMouse);
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.clearGridToolStripMenuItem,
+            this.clearLayerToolStripMenuItem});
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // clearGridToolStripMenuItem
+            // 
+            this.clearGridToolStripMenuItem.Name = "clearGridToolStripMenuItem";
+            this.clearGridToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.clearGridToolStripMenuItem.Text = "Clear Level";
+            this.clearGridToolStripMenuItem.Click += new System.EventHandler(this.clearGridToolStripMenuItem_Click);
+            // 
+            // clearLayerToolStripMenuItem
+            // 
+            this.clearLayerToolStripMenuItem.Name = "clearLayerToolStripMenuItem";
+            this.clearLayerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.clearLayerToolStripMenuItem.Text = "Clear Layer";
+            this.clearLayerToolStripMenuItem.Click += new System.EventHandler(this.clearLayerToolStripMenuItem_Click);
             // 
             // Main
             // 
@@ -136,6 +177,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ClientSize = new System.Drawing.Size(858, 737);
+            this.Controls.Add(this.chkGrid);
             this.Controls.Add(this.comLayerSelect);
             this.Controls.Add(this.Canvas);
             this.Controls.Add(this.Icons);
@@ -165,6 +207,10 @@
         private System.Windows.Forms.ComboBox comLayerSelect;
         private System.Windows.Forms.ToolStripMenuItem saveLevelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem loadLevelToolStripMenuItem;
+        private System.Windows.Forms.CheckBox chkGrid;
+        private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearGridToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem clearLayerToolStripMenuItem;
     }
 }
 

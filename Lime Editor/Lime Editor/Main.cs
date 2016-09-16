@@ -87,6 +87,23 @@ namespace Lime_Editor
                 }
             }
 
+            //Draw Grid
+            if (chkGrid.Checked)
+            {
+                for (int i = 0; i < ProjOps.gridSize.width; i++)
+                {
+                    for (int j = 0; j < ProjOps.gridSize.height; j++)
+                    {
+                        float ts = ProjOps.tileSize;
+                        int sc = (int)((ts - 1) * ProjOps.zoomFactor);
+                        int x = (int)Math.Floor((double)(i * sc));
+                        int y = (int)Math.Floor((double)(j * sc));
+                        int s = (int)Math.Round(ts * ProjOps.zoomFactor);
+                        g.DrawRectangle(new Pen(Color.LightGray), new Rectangle(x, y, s - 1, s - 1));
+                    }
+                }
+            }
+
             //Draw tile at mouse pos, rounded to grid coord
             if (Icons.SelectedIndices.Count > 0)
             {
@@ -138,6 +155,11 @@ namespace Lime_Editor
             UpdateGridForMouse(e);
         }
 
+        private void UpdateNonMouse(object sender, EventArgs e)
+        {
+            Canvas.Invalidate();
+        }
+
         private void comLayerSelect_SelectedIndexChanged(object sender, EventArgs e)
         {
             selectedLayer = comLayerSelect.SelectedIndex;
@@ -162,6 +184,25 @@ namespace Lime_Editor
         private void loadLevelToolStripMenuItem_Click(object sender, EventArgs e)
         {
             layers = Levels.LoadLevel(layers, ProjOps);
+        }
+
+        private void clearGridToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (Editor.TileGrid grid in layers.layers)
+            {
+                foreach (Editor.Tile tile in grid.tiles)
+                {
+                    tile.tileId = -1;
+                }
+            }
+        }
+
+        private void clearLayerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (Editor.Tile tile in layers.layers[selectedLayer].tiles)
+            {
+                tile.tileId = -1;
+            }
         }
     }
 }
