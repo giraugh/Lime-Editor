@@ -18,7 +18,7 @@ namespace Lime_Editor
             Stream lvlStr;
             var lvl = SerializeLevel(layers, projOptions);
             SaveFileDialog fd = new SaveFileDialog();
-            fd.Filter = "levels (*.lvl)|*.lvl|All files (*.*)|*.*";
+            fd.Filter = "levels (*.llvl)|*.llvl|All files (*.*)|*.*";
 
             if (fd.ShowDialog() == DialogResult.OK)
             {
@@ -34,7 +34,7 @@ namespace Lime_Editor
         public static Layers LoadLevel(Layers layers, Loading.ProjectOptions projOps)
         {
             OpenFileDialog od = new OpenFileDialog();
-            od.Filter = "levels (*.lvl)|*.lvl|All files (*.*)|*.*";
+            od.Filter = "levels (*.llvl)|*.llvl|All files (*.*)|*.*";
             if (od.ShowDialog() == DialogResult.OK)
             {
                 layers = DeserialiseLevel(layers, File.ReadAllText(od.FileName), projOps);
