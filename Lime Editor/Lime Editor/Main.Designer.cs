@@ -97,6 +97,7 @@
             this.Canvas.Size = new System.Drawing.Size(598, 697);
             this.Canvas.TabIndex = 3;
             this.Canvas.Paint += new System.Windows.Forms.PaintEventHandler(this.Canvas_Paint);
+            this.Canvas.MouseDown += new System.Windows.Forms.MouseEventHandler(this.UpdateGridForMouse);
             this.Canvas.MouseMove += new System.Windows.Forms.MouseEventHandler(this.UpdateOnMouseMove);
             // 
             // Main

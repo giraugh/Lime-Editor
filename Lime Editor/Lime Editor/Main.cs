@@ -70,7 +70,8 @@ namespace Lime_Editor
                     float ts = ProjOps.tileSize;
                     int x = (tile.position.x*(int)ts)*(int)grid.zoomFactor;
                     int y = (tile.position.y*(int)ts)*(int)grid.zoomFactor;
-                    if (tile.image != null)
+                    bool Hover = (tile.position.x == getUnscaledMousePos().X && tile.position.y == getUnscaledMousePos().Y);
+                    if (tile.image != null && !Hover)
                     {
                         g.DrawImage(tile.image, x, y, (float)Math.Round(ts*grid.zoomFactor), (float)Math.Round(ts*grid.zoomFactor));
                     }
@@ -90,6 +91,32 @@ namespace Lime_Editor
             }
         }
 
+        private void UpdateGridForMouse(object sender, MouseEventArgs e)
+        {
+            if (Icons.SelectedIndices.Count > 0) {
+                Point m = getUnscaledMousePos();
+                foreach (Editor.Tile tile in grid.tiles)
+                {
+                    if (tile.position.x == m.X && tile.position.y == m.Y)
+                    {
+                        tile.tileId = Icons.SelectedIndices[0];
+                    }
+                }
+            }
+        }
+
+
+        private Point getUnscaledMousePos()
+        {
+            Point mp = Canvas.PointToClient(Cursor.Position);
+            float mpx = mp.X;
+            float mpy = mp.Y;
+            float sc = (grid.zoomFactor * ProjOps.tileSize);
+            mpx = (float)Math.Round(mpx / sc);
+            mpy = (float)Math.Round(mpy / sc);
+            return new Point((int)mpx, (int)mpy);
+        }
+
         private Point getMousePos()
         {
             Point mp = Canvas.PointToClient(Cursor.Position);
@@ -105,6 +132,5 @@ namespace Lime_Editor
         {
             Canvas.Invalidate();
         }
-
     }
 }
