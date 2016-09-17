@@ -244,7 +244,7 @@ namespace Lime_Editor
                 for (int x = 0; x < tilesPerRow; x++)
                 {
                     if (imageIt < Icons.LargeImageList.Images.Count)
-                        canvas.DrawImage(Icons.LargeImageList.Images[imageIt], new Point(x * tileSize, y * tileSize));
+                        canvas.DrawImage(ProjOps.images.Images[imageIt], new Point(x * tileSize, y * tileSize));
                     imageIt++;
                 }
             }
@@ -252,8 +252,14 @@ namespace Lime_Editor
             //Save the canvas back into the image
             canvas.Save();
 
-            //Save the bitmap as a png
-            bmp.Save("TILESHEET.png", System.Drawing.Imaging.ImageFormat.Png);
+            //Create a save file dialog to get a path
+            SaveFileDialog fd = new SaveFileDialog();
+            fd.Filter = "Portable Network Graphic (*.png)|*.png|All files (*.*)|*.*";
+            if (fd.ShowDialog() == DialogResult.OK)
+            {
+                //Save the bitmap as a png
+                bmp.Save(fd.FileName, System.Drawing.Imaging.ImageFormat.Png);
+            }
         }
     }
 }
