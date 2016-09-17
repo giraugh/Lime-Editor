@@ -35,13 +35,14 @@
             this.loadProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.Canvas = new System.Windows.Forms.Panel();
-            this.comLayerSelect = new System.Windows.Forms.ComboBox();
-            this.chkGrid = new System.Windows.Forms.CheckBox();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearLayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.fillLayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.Canvas = new System.Windows.Forms.Panel();
+            this.comLayerSelect = new System.Windows.Forms.ComboBox();
+            this.chkGrid = new System.Windows.Forms.CheckBox();
+            this.exportTilesheetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuTopBar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -86,7 +87,8 @@
             this.fileToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadProjectToolStripMenuItem,
             this.saveLevelToolStripMenuItem,
-            this.loadLevelToolStripMenuItem});
+            this.loadLevelToolStripMenuItem,
+            this.exportTilesheetToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -94,23 +96,54 @@
             // loadProjectToolStripMenuItem
             // 
             this.loadProjectToolStripMenuItem.Name = "loadProjectToolStripMenuItem";
-            this.loadProjectToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.loadProjectToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.loadProjectToolStripMenuItem.Text = "Load Project";
             this.loadProjectToolStripMenuItem.Click += new System.EventHandler(this.loadProjectToolStripMenuItem_Click);
             // 
             // saveLevelToolStripMenuItem
             // 
             this.saveLevelToolStripMenuItem.Name = "saveLevelToolStripMenuItem";
-            this.saveLevelToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.saveLevelToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.saveLevelToolStripMenuItem.Text = "Save level";
             this.saveLevelToolStripMenuItem.Click += new System.EventHandler(this.saveLevelToolStripMenuItem_Click);
             // 
             // loadLevelToolStripMenuItem
             // 
             this.loadLevelToolStripMenuItem.Name = "loadLevelToolStripMenuItem";
-            this.loadLevelToolStripMenuItem.Size = new System.Drawing.Size(140, 22);
+            this.loadLevelToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
             this.loadLevelToolStripMenuItem.Text = "Load Level";
             this.loadLevelToolStripMenuItem.Click += new System.EventHandler(this.loadLevelToolStripMenuItem_Click);
+            // 
+            // editToolStripMenuItem
+            // 
+            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.clearGridToolStripMenuItem,
+            this.clearLayerToolStripMenuItem,
+            this.fillLayerToolStripMenuItem});
+            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
+            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
+            this.editToolStripMenuItem.Text = "Edit";
+            // 
+            // clearGridToolStripMenuItem
+            // 
+            this.clearGridToolStripMenuItem.Name = "clearGridToolStripMenuItem";
+            this.clearGridToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.clearGridToolStripMenuItem.Text = "Clear Level";
+            this.clearGridToolStripMenuItem.Click += new System.EventHandler(this.clearGridToolStripMenuItem_Click);
+            // 
+            // clearLayerToolStripMenuItem
+            // 
+            this.clearLayerToolStripMenuItem.Name = "clearLayerToolStripMenuItem";
+            this.clearLayerToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.clearLayerToolStripMenuItem.Text = "Clear Layer";
+            this.clearLayerToolStripMenuItem.Click += new System.EventHandler(this.clearLayerToolStripMenuItem_Click);
+            // 
+            // fillLayerToolStripMenuItem
+            // 
+            this.fillLayerToolStripMenuItem.Name = "fillLayerToolStripMenuItem";
+            this.fillLayerToolStripMenuItem.Size = new System.Drawing.Size(132, 22);
+            this.fillLayerToolStripMenuItem.Text = "Fill Layer";
+            this.fillLayerToolStripMenuItem.Click += new System.EventHandler(this.fillLayerToolStripMenuItem_Click);
             // 
             // Canvas
             // 
@@ -149,36 +182,12 @@
             this.chkGrid.UseVisualStyleBackColor = true;
             this.chkGrid.CheckedChanged += new System.EventHandler(this.UpdateNonMouse);
             // 
-            // editToolStripMenuItem
+            // exportTilesheetToolStripMenuItem
             // 
-            this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.clearGridToolStripMenuItem,
-            this.clearLayerToolStripMenuItem,
-            this.fillLayerToolStripMenuItem});
-            this.editToolStripMenuItem.Name = "editToolStripMenuItem";
-            this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
-            this.editToolStripMenuItem.Text = "Edit";
-            // 
-            // clearGridToolStripMenuItem
-            // 
-            this.clearGridToolStripMenuItem.Name = "clearGridToolStripMenuItem";
-            this.clearGridToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.clearGridToolStripMenuItem.Text = "Clear Level";
-            this.clearGridToolStripMenuItem.Click += new System.EventHandler(this.clearGridToolStripMenuItem_Click);
-            // 
-            // clearLayerToolStripMenuItem
-            // 
-            this.clearLayerToolStripMenuItem.Name = "clearLayerToolStripMenuItem";
-            this.clearLayerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.clearLayerToolStripMenuItem.Text = "Clear Layer";
-            this.clearLayerToolStripMenuItem.Click += new System.EventHandler(this.clearLayerToolStripMenuItem_Click);
-            // 
-            // fillLayerToolStripMenuItem
-            // 
-            this.fillLayerToolStripMenuItem.Name = "fillLayerToolStripMenuItem";
-            this.fillLayerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.fillLayerToolStripMenuItem.Text = "Fill Layer";
-            this.fillLayerToolStripMenuItem.Click += new System.EventHandler(this.fillLayerToolStripMenuItem_Click);
+            this.exportTilesheetToolStripMenuItem.Name = "exportTilesheetToolStripMenuItem";
+            this.exportTilesheetToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.exportTilesheetToolStripMenuItem.Text = "Export Tilesheet";
+            this.exportTilesheetToolStripMenuItem.Click += new System.EventHandler(this.exportTilesheetToolStripMenuItem_Click);
             // 
             // Main
             // 
@@ -221,6 +230,7 @@
         private System.Windows.Forms.ToolStripMenuItem clearGridToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearLayerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fillLayerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportTilesheetToolStripMenuItem;
     }
 }
 

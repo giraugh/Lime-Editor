@@ -221,5 +221,39 @@ namespace Lime_Editor
                     tile.tileId = Icons.SelectedIndices[0];
             }
         }
+
+        private void exportTilesheetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            int amount = Icons.Items.Count;
+            int tileSize = ProjOps.tileSize;
+            int tilesPerRow = 6;
+            int tilesPerColumn = (int)Math.Ceiling((double)(amount / tilesPerRow));
+            int width = tilesPerRow * tileSize;
+            int height = tilesPerColumn * tileSize;
+
+            Bitmap bmp = new Bitmap(width, height);
+            Graphics canvas = Graphics.FromImage(bmp);
+            canvas.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+
+            //Image Iterator
+            int imageIt = 0;
+
+            //Foreach Tile in the tilesheet, draw the correct tile
+            for (int y = 0;y < tilesPerColumn;y++)
+            {
+                for (int x = 0; x < tilesPerRow; x++)
+                {
+                    if (imageIt < Icons.LargeImageList.Images.Count)
+                        canvas.DrawImage(Icons.LargeImageList.Images[imageIt], new Point(x * tileSize, y * tileSize));
+                    imageIt++;
+                }
+            }
+
+            //Save the canvas back into the image
+            canvas.Save();
+
+            //Save the bitmap as a png
+            bmp.Save("TILESHEET.png", System.Drawing.Imaging.ImageFormat.Png);
+        }
     }
 }
