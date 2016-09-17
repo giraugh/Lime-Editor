@@ -41,6 +41,7 @@
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearLayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.fillLayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuTopBar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -152,7 +153,8 @@
             // 
             this.editToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.clearGridToolStripMenuItem,
-            this.clearLayerToolStripMenuItem});
+            this.clearLayerToolStripMenuItem,
+            this.fillLayerToolStripMenuItem});
             this.editToolStripMenuItem.Name = "editToolStripMenuItem";
             this.editToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.editToolStripMenuItem.Text = "Edit";
@@ -170,6 +172,13 @@
             this.clearLayerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.clearLayerToolStripMenuItem.Text = "Clear Layer";
             this.clearLayerToolStripMenuItem.Click += new System.EventHandler(this.clearLayerToolStripMenuItem_Click);
+            // 
+            // fillLayerToolStripMenuItem
+            // 
+            this.fillLayerToolStripMenuItem.Name = "fillLayerToolStripMenuItem";
+            this.fillLayerToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.fillLayerToolStripMenuItem.Text = "Fill Layer";
+            this.fillLayerToolStripMenuItem.Click += new System.EventHandler(this.fillLayerToolStripMenuItem_Click);
             // 
             // Main
             // 
@@ -211,6 +220,7 @@
         private System.Windows.Forms.ToolStripMenuItem editToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearGridToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearLayerToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem fillLayerToolStripMenuItem;
     }
 }
 

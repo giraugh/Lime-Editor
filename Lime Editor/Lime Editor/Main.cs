@@ -21,8 +21,10 @@ namespace Lime_Editor
         Loading.ProjectOptions ProjOps;
         Editor.Layers layers;
         int selectedLayer = 0;
+        string[] args;
 
-        public Main() {
+        public Main(string[] args) {
+            this.args = args;
             InitializeComponent();
         }
 
@@ -37,6 +39,12 @@ namespace Lime_Editor
 
             //Prevent Icons from losing selection when focus is lost
             Icons.HideSelection = false;
+
+            //Load File if it is passed as argument
+            if (args.Length > 0)
+            {
+                layers = Levels.DeserialiseLevel(layers, File.ReadAllText(args[0]), ProjOps);
+            }
         }
 
         public void Load_Project(string proj)
@@ -183,7 +191,7 @@ namespace Lime_Editor
 
         private void loadLevelToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            layers = Levels.LoadLevel(layers, ProjOps);
+            layers = Levels.LoadLevel(layers, ProjOps, Project);
         }
 
         private void clearGridToolStripMenuItem_Click(object sender, EventArgs e)
@@ -202,6 +210,15 @@ namespace Lime_Editor
             foreach (Editor.Tile tile in layers.layers[selectedLayer].tiles)
             {
                 tile.tileId = -1;
+            }
+        }
+
+        private void fillLayerToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (Editor.Tile tile in layers.layers[selectedLayer].tiles)
+            {
+                if (Icons.SelectedIndices.Count > 0)
+                    tile.tileId = Icons.SelectedIndices[0];
             }
         }
     }

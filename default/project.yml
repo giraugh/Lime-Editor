@@ -6,9 +6,8 @@ tileSize: 18
 tiles: "tiles.yml"
 spritesheet: "tilesheet.png"
 zoomFactor: 2
-layerCount: 4
+layerCount: 3
 layerNames:
   - Background
-  - Raised
   - Details
   - Trees

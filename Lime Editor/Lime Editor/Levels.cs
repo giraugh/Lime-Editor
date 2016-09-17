@@ -31,10 +31,11 @@ namespace Lime_Editor
             }
         }
 
-        public static Layers LoadLevel(Layers layers, Loading.ProjectOptions projOps)
+        public static Layers LoadLevel(Layers layers, Loading.ProjectOptions projOps, string Project)
         {
             OpenFileDialog od = new OpenFileDialog();
             od.Filter = "levels (*.llvl)|*.llvl|All files (*.*)|*.*";
+            od.InitialDirectory = Project;
             if (od.ShowDialog() == DialogResult.OK)
             {
                 layers = DeserialiseLevel(layers, File.ReadAllText(od.FileName), projOps);
@@ -42,7 +43,7 @@ namespace Lime_Editor
             return layers;
         }
 
-        private static Layers DeserialiseLevel(Layers layers, string lvl, Loading.ProjectOptions projOps)
+        public static Layers DeserialiseLevel(Layers layers, string lvl, Loading.ProjectOptions projOps)
         {
 
             //RESET LAYERS obj
@@ -105,6 +106,10 @@ namespace Lime_Editor
                     curLayer = Int32.Parse(swiLayer);
                     buffer = "";
                     xIt = yIt = 0;
+                    if (curLayer > projOps.layerCount)
+                    {
+                        break;
+                    }
                 }
 
                 //NUMBER
@@ -129,7 +134,7 @@ namespace Lime_Editor
             return layers;
         }
 
-        private static string SerializeLevel(Layers layers, Loading.ProjectOptions projOptions)
+        public static string SerializeLevel(Layers layers, Loading.ProjectOptions projOptions)
         {
             string s = "";
 
