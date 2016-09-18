@@ -261,5 +261,31 @@ namespace Lime_Editor
                 bmp.Save(fd.FileName, System.Drawing.Imaging.ImageFormat.Png);
             }
         }
+
+        private void levelAsTableToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog fd = new SaveFileDialog();
+            fd.Filter = "MoonShine (*.shine)|*.shine|All files (*.*)|*.*";
+            if (fd.ShowDialog() == DialogResult.OK)
+            {
+                //Save the level as a moonshine table
+                var fileName = fd.FileName;
+                var contents = Levels.SerializeLevelLua(layers, ProjOps);
+                File.WriteAllText(fileName, contents);
+            }
+        }
+
+        private void levelCoffeescriptToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog fd = new SaveFileDialog();
+            fd.Filter = "Coffeescript (*.coffee)|*.coffee|All files (*.*)|*.*";
+            if (fd.ShowDialog() == DialogResult.OK)
+            {
+                //Save the level as a moonshine table
+                var fileName = fd.FileName;
+                var contents = Levels.SerializeLevelCoffee(layers, ProjOps);
+                File.WriteAllText(fileName, contents);
+            }
+        }
     }
 }

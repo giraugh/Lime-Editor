@@ -7,6 +7,7 @@ using static Lime_Editor.Editor;
 using System.Windows.Forms;
 using System.IO;
 using System.Text.RegularExpressions;
+using YamlDotNet.Serialization;
 
 namespace Lime_Editor
 {
@@ -48,7 +49,6 @@ namespace Lime_Editor
 
             //RESET LAYERS obj
             layers = new Layers((uint)projOps.layerCount, projOps.gridSize, projOps);
-
 
             //REGEXI
             Regex PROJECTNAME = new Regex(@"\[PROJECTNAME:(.+)\]");
@@ -116,9 +116,9 @@ namespace Lime_Editor
                 if (NUMBER.IsMatch(buffer))
                 {
                     var num = NUMBER.Match(buffer).Groups[1].ToString();
-                    layers.layers[curLayer-1].tiles[xIt, yIt] = new Tile(xIt, yIt, projOps, Int32.Parse(num));
+                    layers.layers[curLayer - 1].tiles[xIt, yIt] = new Tile(xIt, yIt, projOps, Int32.Parse(num));
                     yIt++;
-                    if (yIt > levelWidth-1)
+                    if (yIt > levelWidth - 1)
                     {
                         yIt = 0;
                         xIt++;
@@ -147,7 +147,7 @@ namespace Lime_Editor
             foreach (TileGrid layer in layers.layers)
             {
                 uint it = 1;
-                s += $"[LAYER:{curLayer+1}]\n";
+                s += $"[LAYER:{curLayer + 1}]\n";
                 foreach (Tile tile in layer.tiles)
                 {
                     var t = tile.tileId.ToString();
@@ -166,5 +166,77 @@ namespace Lime_Editor
 
             return s;
         }
+
+        public static string SerializeLevelLua(Layers layers, Loading.ProjectOptions projOptions)
+        {
+            string s = "";
+            s += "export ^\n";
+            s += "Level = {\n";
+            s += "\tprojectName: " + projOptions.name + "\n";
+            s += "\ttileSize: " + projOptions.tileSize + "\n";
+            s += "\tlevelSize: {" + projOptions.gridSize.width.ToString() + ", " + projOptions.gridSize.height.ToString() + "}\n";
+
+            s += "\tdata: \n";
+            uint curLayer = 0;
+            foreach (TileGrid layer in layers.layers)
+            {
+                uint it = 1;
+                s += "\t\t{\n\t\t\t";
+                foreach (Tile tile in layer.tiles)
+                {
+                    var t = tile.tileId.ToString();
+                    if (t.Length == 1) { t = " " + t; }
+                    s += $"{t},";
+                    if (it == projOptions.gridSize.width)
+                    {
+                        it = 0;
+                        s += "\n\t\t\t";
+                    }
+                    it++;
+                }
+                s = s.Substring(0, s.Length - 1);
+                s += "}\n";
+                curLayer++;
+            }
+
+            s += "}";
+
+            return s;
+        }
+
+        public static string SerializeLevelCoffee(Layers layers, Loading.ProjectOptions projOptions)
+        {
+            string s = "";
+            s += "Level = \n";
+            s += "\tprojectName: " + projOptions.name + "\n";
+            s += "\ttileSize: " + projOptions.tileSize + "\n";
+            s += "\tlevelSize: [" + projOptions.gridSize.width.ToString() + ", " + projOptions.gridSize.height.ToString() + "]\n";
+
+            s += "\tdata: \n";
+            uint curLayer = 0;
+            foreach (TileGrid layer in layers.layers)
+            {
+                uint it = 1;
+                s += "\t\t[\n\t\t\t";
+                foreach (Tile tile in layer.tiles)
+                {
+                    var t = tile.tileId.ToString();
+                    if (t.Length == 1) { t = " " + t; }
+                    s += $"{t},";
+                    if (it == projOptions.gridSize.width)
+                    {
+                        it = 0;
+                        s += "\n\t\t\t";
+                    }
+                    it++;
+                }
+                s = s.Substring(0, s.Length - 1);
+                s += "],\n";
+                curLayer++;
+            }
+
+            return s;
+        }
+
     }
 }

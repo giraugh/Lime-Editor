@@ -35,6 +35,10 @@
             this.loadProjectToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.loadLevelToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exportToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.tilesheetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.levelAsTableToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.levelCoffeescriptToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.editToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearGridToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clearLayerToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -42,7 +46,6 @@
             this.Canvas = new System.Windows.Forms.Panel();
             this.comLayerSelect = new System.Windows.Forms.ComboBox();
             this.chkGrid = new System.Windows.Forms.CheckBox();
-            this.exportTilesheetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuTopBar.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -88,7 +91,7 @@
             this.loadProjectToolStripMenuItem,
             this.saveLevelToolStripMenuItem,
             this.loadLevelToolStripMenuItem,
-            this.exportTilesheetToolStripMenuItem});
+            this.exportToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
             this.fileToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.fileToolStripMenuItem.Text = "File";
@@ -96,23 +99,54 @@
             // loadProjectToolStripMenuItem
             // 
             this.loadProjectToolStripMenuItem.Name = "loadProjectToolStripMenuItem";
-            this.loadProjectToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.loadProjectToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.loadProjectToolStripMenuItem.Text = "Load Project";
             this.loadProjectToolStripMenuItem.Click += new System.EventHandler(this.loadProjectToolStripMenuItem_Click);
             // 
             // saveLevelToolStripMenuItem
             // 
             this.saveLevelToolStripMenuItem.Name = "saveLevelToolStripMenuItem";
-            this.saveLevelToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.saveLevelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.saveLevelToolStripMenuItem.Text = "Save level";
             this.saveLevelToolStripMenuItem.Click += new System.EventHandler(this.saveLevelToolStripMenuItem_Click);
             // 
             // loadLevelToolStripMenuItem
             // 
             this.loadLevelToolStripMenuItem.Name = "loadLevelToolStripMenuItem";
-            this.loadLevelToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
+            this.loadLevelToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.loadLevelToolStripMenuItem.Text = "Load Level";
             this.loadLevelToolStripMenuItem.Click += new System.EventHandler(this.loadLevelToolStripMenuItem_Click);
+            // 
+            // exportToolStripMenuItem
+            // 
+            this.exportToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.tilesheetToolStripMenuItem,
+            this.levelAsTableToolStripMenuItem,
+            this.levelCoffeescriptToolStripMenuItem});
+            this.exportToolStripMenuItem.Name = "exportToolStripMenuItem";
+            this.exportToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exportToolStripMenuItem.Text = "Export";
+            // 
+            // tilesheetToolStripMenuItem
+            // 
+            this.tilesheetToolStripMenuItem.Name = "tilesheetToolStripMenuItem";
+            this.tilesheetToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.tilesheetToolStripMenuItem.Text = "Tilesheet (Image)";
+            this.tilesheetToolStripMenuItem.Click += new System.EventHandler(this.exportTilesheetToolStripMenuItem_Click);
+            // 
+            // levelAsTableToolStripMenuItem
+            // 
+            this.levelAsTableToolStripMenuItem.Name = "levelAsTableToolStripMenuItem";
+            this.levelAsTableToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.levelAsTableToolStripMenuItem.Text = "Level (Moonshine)";
+            this.levelAsTableToolStripMenuItem.Click += new System.EventHandler(this.levelAsTableToolStripMenuItem_Click);
+            // 
+            // levelCoffeescriptToolStripMenuItem
+            // 
+            this.levelCoffeescriptToolStripMenuItem.Name = "levelCoffeescriptToolStripMenuItem";
+            this.levelCoffeescriptToolStripMenuItem.Size = new System.Drawing.Size(176, 22);
+            this.levelCoffeescriptToolStripMenuItem.Text = "Level (Coffeescript)";
+            this.levelCoffeescriptToolStripMenuItem.Click += new System.EventHandler(this.levelCoffeescriptToolStripMenuItem_Click);
             // 
             // editToolStripMenuItem
             // 
@@ -182,13 +216,6 @@
             this.chkGrid.UseVisualStyleBackColor = true;
             this.chkGrid.CheckedChanged += new System.EventHandler(this.UpdateNonMouse);
             // 
-            // exportTilesheetToolStripMenuItem
-            // 
-            this.exportTilesheetToolStripMenuItem.Name = "exportTilesheetToolStripMenuItem";
-            this.exportTilesheetToolStripMenuItem.Size = new System.Drawing.Size(157, 22);
-            this.exportTilesheetToolStripMenuItem.Text = "Export Tilesheet";
-            this.exportTilesheetToolStripMenuItem.Click += new System.EventHandler(this.exportTilesheetToolStripMenuItem_Click);
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -230,7 +257,10 @@
         private System.Windows.Forms.ToolStripMenuItem clearGridToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clearLayerToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem fillLayerToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exportTilesheetToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exportToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem tilesheetToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem levelAsTableToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem levelCoffeescriptToolStripMenuItem;
     }
 }
 
