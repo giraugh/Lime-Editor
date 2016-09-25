@@ -28,7 +28,7 @@ namespace Lime_Editor
             }
 
             //Load Project Elements
-            Init_Icons(Icons);
+            Icons.Items.Clear();
             ProjectOptions po = Load_ProjectOptions(proj + "/project.yml");
 
             //Check Files Exist
@@ -51,12 +51,6 @@ namespace Lime_Editor
 
             po.images = Load_Tiles(proj + "/"+po.tiles, proj + "/"+po.spritesheet, Icons, po.tileSize);
             return po;
-        }
-
-        public static void Init_Icons(ListView Icons)
-        {
-            //Icons.Columns.Add("Icons", 100);
-            Icons.Items.Clear();
         }
 
         public static ProjectOptions Load_ProjectOptions(string file)
@@ -82,6 +76,7 @@ namespace Lime_Editor
                 Icon ic = Loading.getIcon(tile.pos, tilesheet, tileSize);
                 icons.Images.Add(ic);
                 Icons.Items[iterator].ImageIndex = iterator;
+                Icons.Items[iterator].Tag = tile.hide;
                 iterator++;
             }
 
@@ -140,6 +135,7 @@ namespace Lime_Editor
                         lt.type = type;
                         lt.name = type + "." + iterator.ToString();
                         lt.pos = new Vector2(ix, iy);
+                        lt.hide = tile.hide;
                         tiles.Add(lt);
 
                         iterator++;
@@ -189,12 +185,14 @@ namespace Lime_Editor
             public string type;
             public string name;
             public Vector2 pos;
+            public bool hide;
         }
 
         public class TileType
         {
             public string name { get; set; }
             public Position[] positions { get; set; }
+            public bool hide { get; set; }
         }
 
         public class Position

@@ -169,14 +169,21 @@ namespace Lime_Editor
 
         public static string SerializeLevelLua(Layers layers, Loading.ProjectOptions projOptions)
         {
+
+            /*
+             * NOTE THAT THE IDS HERE ARE ACTUALLY NOT EDITOR ONES,
+             * SO ITS NOT BACKWARDS COMPATIBLE
+             */
+
             string s = "";
             s += "export ^\n";
-            s += "Level = {\n";
+            s += "LevelData = {\n";
             s += "\tprojectName: " + projOptions.name + "\n";
             s += "\ttileSize: " + projOptions.tileSize + "\n";
+            s += "\tlayerCount: " + projOptions.layerCount + "\n";
             s += "\tlevelSize: {" + projOptions.gridSize.width.ToString() + ", " + projOptions.gridSize.height.ToString() + "}\n";
 
-            s += "\tdata: \n";
+            s += "\tdata: {\n";
             uint curLayer = 0;
             foreach (TileGrid layer in layers.layers)
             {
@@ -200,12 +207,19 @@ namespace Lime_Editor
             }
 
             s += "}";
+            s += "}";
 
             return s;
         }
 
         public static string SerializeLevelCoffee(Layers layers, Loading.ProjectOptions projOptions)
         {
+
+            /*
+             * NOTE THAT THE IDS HERE ARE ACTUALLY NOT EDITOR ONES,
+             * SO ITS NOT BACKWARDS COMPATIBLE
+             */
+
             string s = "";
             s += "Level = \n";
             s += "\tprojectName: " + projOptions.name + "\n";

@@ -30,12 +30,16 @@ tiles:
       - start: 7, 2
         end: 9, 2
 
-  #Shadow not included, added automatically by game
-
   - name: "Path"
     positions:
       - start: 0, 3
         end: 8, 3
+
+  - name: "Shadow"
+    positions:
+      - start: 2, 2
+        end: 6, 2
+    hide: true
 
   - name: "Shrub"
     positions:

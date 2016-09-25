@@ -22,6 +22,7 @@ namespace Lime_Editor
         Editor.Layers layers;
         int selectedLayer = 0;
         string[] args;
+        ListView InnerIcons = new ListView();
 
         public Main(string[] args) {
             this.args = args;
@@ -45,11 +46,27 @@ namespace Lime_Editor
             {
                 layers = Levels.DeserialiseLevel(layers, File.ReadAllText(args[0]), ProjOps);
             }
+
+            //associate (items tag is whether to hide)
+            foreach (ListViewItem item in InnerIcons.Items)
+            {
+                if (!(bool)item.Tag)
+                {
+                    ListViewItem newitem = (ListViewItem)item.Clone();
+                    newitem.Tag = item.Index;
+                    newitem.BackColor = Color.Empty;
+                    //newitem.Text += ":"+item.Index;
+                    Icons.Items.Add(newitem);
+                }
+            }
+            //associate images
+            Icons.LargeImageList = InnerIcons.LargeImageList;
+            
         }
 
         public void Load_Project(string proj)
         {
-            ProjOps = Loading.Load_Project(proj, Icons);
+            ProjOps = Loading.Load_Project(proj, InnerIcons);
             if (ProjOps != null)
             {
                 layers = new Editor.Layers((uint)ProjOps.layerCount, ProjOps.gridSize, ProjOps);
@@ -115,7 +132,7 @@ namespace Lime_Editor
             //Draw tile at mouse pos, rounded to grid coord
             if (Icons.SelectedIndices.Count > 0)
             {
-                var Selected = Icons.SelectedIndices[0];
+                var Selected = (int)Icons.Items[Icons.SelectedIndices[0]].Tag; ;
                 float sc = (float)Math.Round(ProjOps.tileSize * ProjOps.zoomFactor);
                 g.DrawImage(ProjOps.images.Images[Selected], getMousePos().X, getMousePos().Y, sc, sc);
             }
@@ -129,8 +146,8 @@ namespace Lime_Editor
                     {
                         if (tile.position.x == m.X && tile.position.y == m.Y)
                         {
-                            if (e.Button == MouseButtons.Left)
-                                tile.tileId = Icons.SelectedIndices[0];
+                        if (e.Button == MouseButtons.Left)
+                            tile.tileId = (int)Icons.Items[Icons.SelectedIndices[0]].Tag;
                             if (e.Button == MouseButtons.Right)
                                 tile.tileId = -1;
                         }
@@ -218,18 +235,18 @@ namespace Lime_Editor
             foreach (Editor.Tile tile in layers.layers[selectedLayer].tiles)
             {
                 if (Icons.SelectedIndices.Count > 0)
-                    tile.tileId = Icons.SelectedIndices[0];
+                    tile.tileId = (int)Icons.Items[Icons.SelectedIndices[0]].Tag;
             }
         }
 
         private void exportTilesheetToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            int amount = Icons.Items.Count;
+            int amount = ProjOps.images.Images.Count;
             int tileSize = ProjOps.tileSize;
-            int tilesPerRow = 6;
-            int tilesPerColumn = (int)Math.Ceiling((double)(amount / tilesPerRow));
-            int width = tilesPerRow * tileSize;
-            int height = tilesPerColumn * tileSize;
+            int columns = (int)Math.Sqrt(amount);
+            int lines = (int)Math.Ceiling(amount / (float)columns);
+            int width = columns * tileSize;
+            int height = lines * tileSize;
 
             Bitmap bmp = new Bitmap(width, height);
             Graphics canvas = Graphics.FromImage(bmp);
@@ -239,9 +256,9 @@ namespace Lime_Editor
             int imageIt = 0;
 
             //Foreach Tile in the tilesheet, draw the correct tile
-            for (int y = 0;y < tilesPerColumn;y++)
+            for (int y = 0;y < lines;y++)
             {
-                for (int x = 0; x < tilesPerRow; x++)
+                for (int x = 0; x < columns; x++)
                 {
                     if (imageIt < Icons.LargeImageList.Images.Count)
                         canvas.DrawImage(ProjOps.images.Images[imageIt], new Point(x * tileSize, y * tileSize));
