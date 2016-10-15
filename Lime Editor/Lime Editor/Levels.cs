@@ -36,7 +36,8 @@ namespace Lime_Editor
         {
             OpenFileDialog od = new OpenFileDialog();
             od.Filter = "levels (*.llvl)|*.llvl|All files (*.*)|*.*";
-            od.InitialDirectory = Project;
+            od.InitialDirectory = Directory.GetCurrentDirectory() + "\\" + Project;
+            if (Directory.Exists(od.InitialDirectory+"\\levels")) { od.InitialDirectory = od.InitialDirectory + "\\levels"; }
             if (od.ShowDialog() == DialogResult.OK)
             {
                 layers = DeserialiseLevel(layers, File.ReadAllText(od.FileName), projOps);
