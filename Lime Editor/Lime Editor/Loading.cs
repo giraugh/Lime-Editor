@@ -15,8 +15,22 @@ namespace Lime_Editor
 {
     public class Loading
     {
-        public static ProjectOptions Load_Project(string proj, ListView Icons)
+        public static ProjectOptions Load_Project(string proj, ListView Icons, bool muteDirectoryError)
         {
+
+            //Check the project exists
+            if (!Directory.Exists(proj))
+            {
+                if (!muteDirectoryError)
+                {
+                    MessageBox.Show(
+                        "'" + proj + "' is not a directory.",
+                        "Folder is not a project",
+                        MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                return null;
+            }
+
             //Check Is Project
             if (!File.Exists(proj + "/project.yml"))
             {

@@ -17,7 +17,7 @@ namespace Lime_Editor
 {
     public partial class Main : Form
     {
-        string Project = "D:/REPOS/LimeEditor/default";
+        string Project = "default";
         Loading.ProjectOptions ProjOps;
         Editor.Layers layers;
         int selectedLayer = 0;
@@ -31,7 +31,7 @@ namespace Lime_Editor
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            Load_Project(Project);
+            Load_Project(Project, true);
 
             //Enable Double Buffering on the canvas panel
             typeof(Panel).InvokeMember("DoubleBuffered",
@@ -46,6 +46,35 @@ namespace Lime_Editor
             {
                 layers = Levels.DeserialiseLevel(layers, File.ReadAllText(args[0]), ProjOps);
             }
+            
+        }
+
+        public void Load_Project(string proj, bool muteDirectoryError)
+        {
+            ProjOps = Loading.Load_Project(proj, InnerIcons, muteDirectoryError);
+            if (ProjOps != null)
+            {
+                layers = new Editor.Layers((uint)ProjOps.layerCount, ProjOps.gridSize, ProjOps);
+            }
+            else
+            {
+                if (!muteDirectoryError)
+                {
+                    MessageBox.Show("Project failed to load, no ops returned.");
+                }
+                return;
+            }
+
+            //set layer selection combo box
+            for (int i = 0; i < ProjOps.layerCount; i++) {
+                if (i < ProjOps.layerNames.Count<string>())
+                    comLayerSelect.Items.Add(ProjOps.layerNames[i]);
+                else
+                    comLayerSelect.Items.Add("Layer "+(i+1).ToString());
+            }
+
+            //set selected layer to first
+            comLayerSelect.SelectedIndex = 0;
 
             //associate (items tag is whether to hide)
             foreach (ListViewItem item in InnerIcons.Items)
@@ -61,29 +90,6 @@ namespace Lime_Editor
             }
             //associate images
             Icons.LargeImageList = InnerIcons.LargeImageList;
-            
-        }
-
-        public void Load_Project(string proj)
-        {
-            ProjOps = Loading.Load_Project(proj, InnerIcons);
-            if (ProjOps != null)
-            {
-                layers = new Editor.Layers((uint)ProjOps.layerCount, ProjOps.gridSize, ProjOps);
-            }
-            else
-            { MessageBox.Show("Project failed to load, no ops returned."); }
-
-            //set layer selection combo box
-            for (int i = 0; i < ProjOps.layerCount; i++) {
-                if (i < ProjOps.layerNames.Count<string>())
-                    comLayerSelect.Items.Add(ProjOps.layerNames[i]);
-                else
-                    comLayerSelect.Items.Add("Layer "+(i+1).ToString());
-            }
-
-            //set selected layer to first
-            comLayerSelect.SelectedIndex = 0;
         }
 
         private void Canvas_Paint(object sender, PaintEventArgs e)
@@ -100,7 +106,7 @@ namespace Lime_Editor
                     foreach (Editor.Tile tile in grid.tiles)
                     {
                         float ts = ProjOps.tileSize;
-                        int sc = (int)((ts-1) * ProjOps.zoomFactor);
+                        int sc = (int)((ts - 1) * ProjOps.zoomFactor);
                         int x = (int)Math.Floor((double)(tile.position.x * sc));
                         int y = (int)Math.Floor((double)(tile.position.y * sc));
                         bool Hover = (tile.position.x == getUnscaledMousePos().X && tile.position.y == getUnscaledMousePos().Y);
@@ -110,31 +116,31 @@ namespace Lime_Editor
                         }
                     }
                 }
-            }
 
-            //Draw Grid
-            if (chkGrid.Checked)
-            {
-                for (int i = 0; i < ProjOps.gridSize.width; i++)
+                //Draw Grid
+                if (chkGrid.Checked)
                 {
-                    for (int j = 0; j < ProjOps.gridSize.height; j++)
+                    for (int i = 0; i < ProjOps.gridSize.width; i++)
                     {
-                        float ts = ProjOps.tileSize;
-                        int sc = (int)((ts - 1) * ProjOps.zoomFactor);
-                        int x = (int)Math.Floor((double)(i * sc));
-                        int y = (int)Math.Floor((double)(j * sc));
-                        int s = (int)Math.Round(ts * ProjOps.zoomFactor);
-                        g.DrawRectangle(new Pen(Color.LightGray), new Rectangle(x, y, s - 1, s - 1));
+                        for (int j = 0; j < ProjOps.gridSize.height; j++)
+                        {
+                            float ts = ProjOps.tileSize;
+                            int sc = (int)((ts - 1) * ProjOps.zoomFactor);
+                            int x = (int)Math.Floor((double)(i * sc));
+                            int y = (int)Math.Floor((double)(j * sc));
+                            int s = (int)Math.Round(ts * ProjOps.zoomFactor);
+                            g.DrawRectangle(new Pen(Color.LightGray), new Rectangle(x, y, s - 1, s - 1));
+                        }
                     }
                 }
-            }
 
-            //Draw tile at mouse pos, rounded to grid coord
-            if (Icons.SelectedIndices.Count > 0)
-            {
-                var Selected = (int)Icons.Items[Icons.SelectedIndices[0]].Tag; ;
-                float sc = (float)Math.Round(ProjOps.tileSize * ProjOps.zoomFactor);
-                g.DrawImage(ProjOps.images.Images[Selected], getMousePos().X, getMousePos().Y, sc, sc);
+                //Draw tile at mouse pos, rounded to grid coord
+                if (Icons.SelectedIndices.Count > 0)
+                {
+                    var Selected = (int)Icons.Items[Icons.SelectedIndices[0]].Tag; ;
+                    float sc = (float)Math.Round(ProjOps.tileSize * ProjOps.zoomFactor);
+                    g.DrawImage(ProjOps.images.Images[Selected], getMousePos().X, getMousePos().Y, sc, sc);
+                }
             }
         }
 
@@ -202,7 +208,7 @@ namespace Lime_Editor
             if (!string.IsNullOrWhiteSpace(fbd.SelectedPath))
             {
                 Project = fbd.SelectedPath;
-                Load_Project(Project);
+                Load_Project(Project, false);
             }
         }
 

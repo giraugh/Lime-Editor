@@ -9,3 +9,14 @@ D:\REPOS\LimeEditor\Lime Editor\Lime Editor\obj\Debug\Lime Editor.pdb
 D:\REPOS\LimeEditor\Lime Editor\Lime Editor\obj\Debug\Lime_Editor.Main.resources
 D:\REPOS\LimeEditor\Lime Editor\Lime Editor\bin\Debug\YamlDotNet.pdb
 D:\REPOS\LimeEditor\Lime Editor\Lime Editor\bin\Debug\YamlDotNet.xml
+D:\REPOS\Lime-Editor\Lime Editor\Lime Editor\bin\Debug\Lime Editor.exe.config
+D:\REPOS\Lime-Editor\Lime Editor\Lime Editor\bin\Debug\Lime Editor.exe
+D:\REPOS\Lime-Editor\Lime Editor\Lime Editor\bin\Debug\Lime Editor.pdb
+D:\REPOS\Lime-Editor\Lime Editor\Lime Editor\bin\Debug\YamlDotNet.pdb
+D:\REPOS\Lime-Editor\Lime Editor\Lime Editor\bin\Debug\YamlDotNet.xml
+D:\REPOS\Lime-Editor\Lime Editor\Lime Editor\obj\Debug\Lime Editor.csprojResolveAssemblyReference.cache
+D:\REPOS\Lime-Editor\Lime Editor\Lime Editor\obj\Debug\Lime_Editor.Main.resources
+D:\REPOS\Lime-Editor\Lime Editor\Lime Editor\obj\Debug\Lime_Editor.Properties.Resources.resources
+D:\REPOS\Lime-Editor\Lime Editor\Lime Editor\obj\Debug\Lime Editor.csproj.GenerateResource.Cache
+D:\REPOS\Lime-Editor\Lime Editor\Lime Editor\obj\Debug\Lime Editor.exe
+D:\REPOS\Lime-Editor\Lime Editor\Lime Editor\obj\Debug\Lime Editor.pdb
